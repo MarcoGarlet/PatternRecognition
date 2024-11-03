@@ -5,6 +5,21 @@ on:
     branches:
       - main
 
+services:
+  postgres:
+    image: postgres:13
+    env:
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+    ports:
+      - 5432:5432
+    options: >-
+      --health-cmd="pg_isready -U ${{ secrets.POSTGRES_USER }}" 
+      --health-interval=10s 
+      --health-timeout=5s 
+      --health-retries=5
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -37,5 +52,4 @@ jobs:
           SPRING_DATASOURCE_URL: ${{secrets.SPRING_DATASOURCE_URL}}
           SPRING_DATASOURCE_USERNAME: ${{secrets.SPRING_DATASOURCE_USERNAME}}
           SPRING_DATASOURCE_PASSWORD: ${{secrets.SPRING_DATASOURCE_PASSWORD}}
-          SPRING_DATASOURCE_DRIVER_CLASS_NAME: ${{secrets.SPRING_DATASOURCE_DRIVER_CLASS_NAME}}
         run: ./gradlew test
