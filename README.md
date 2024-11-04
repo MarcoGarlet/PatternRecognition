@@ -14,9 +14,15 @@ The solution leverages PostgreSQL as a database and Docker for containerization.
 
 ## Usage
 
-To run the application, clone the repository and use Docker Compose:
+To run the application, clone the repository create a .env file in the root project directory, and use Docker Compose:
 
 ```bash
+echo "POSTGRES_USER=myuser" > .env
+echo "POSTGRES_PASSWORD=mypassword" >> .env
+echo "POSTGRES_DB=mydb" >> .env
+echo "SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/mydb" >> .env
+echo "SPRING_DATASOURCE_USERNAME=myuser" >> .env
+echo "SPRING_DATASOURCE_PASSWORD=mypassword" >> .env
 docker compose up -d
 ```
 
