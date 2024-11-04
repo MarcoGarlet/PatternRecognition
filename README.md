@@ -11,7 +11,6 @@ The solution leverages PostgreSQL as a database and Docker for containerization.
 - [Run Tests Locally](#run-tests-locally)
 - [Generate Documentation](#generate-documentation)
 - [Solution Details](#solution-details)
-- [Future Improvements](#future-improvements)
 
 ## Usage
 
