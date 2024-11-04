@@ -38,3 +38,10 @@ tasks.named('test') {
         html.required.set(false)      // Optionally enable HTML reports for viewing in a browser
     }
 }
+
+tasks.named("javadoc") {
+    destinationDir = file("$buildDir/docs/javadoc") // Dove salvare la documentazione
+    options.memberLevel = JavadocMemberLevel.PROTECTED // Per documentare anche i membri protected
+    options.encoding = 'UTF-8' // Encoding per i caratteri speciali
+    options.addStringOption('Xdoclint:none', '-quiet') // Disabilita avvisi di formattazione
+}
