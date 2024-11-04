@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.entity.Point;
 import com.example.demo.repository.PointRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,5 +40,15 @@ public class SpaceController {
     @GetMapping
     public List<Point> findAllPoints() {
         return pointRepository.findAll();
+    }
+    
+    /**
+     * Deletes all points in space.
+     *
+     * <p>This endpoint removes all points from the database.</p>
+     */
+    @DeleteMapping
+    public void deleteAllPoints() {
+        pointRepository.deleteAll();
     }
 }

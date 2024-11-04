@@ -14,6 +14,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,5 +64,21 @@ public class SpaceControllerTest {
                 .andExpect(jsonPath("$[1].id").value(2))
                 .andExpect(jsonPath("$[1].x").value(30.0))
                 .andExpect(jsonPath("$[1].y").value(40.0));
+    }
+
+    /**
+     * Test for the deleteAllPoints endpoint.
+     * Verifies that the endpoint calls deleteAll in the repository.
+     *
+     * @throws Exception if the test fails due to an unexpected error.
+     */
+    @Test
+    public void deleteAllPoints_shouldCallDeleteAllInRepository() throws Exception {
+        // Act: Perform DELETE request
+        mockMvc.perform(delete("/space"))
+                .andExpect(status().isOk()); // Expect HTTP 200 OK
+
+        // Assert: Verify that deleteAll was called once
+        Mockito.verify(pointRepository, times(1)).deleteAll();
     }
 }
