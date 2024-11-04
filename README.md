@@ -26,6 +26,7 @@ This command will spin up two containers:
 - **Database container**: Hosts a PostgreSQL instance.
 
 The API is exposed on port `8080` (or your specified configuration), and the database is exposed on port `5432`.
+For an efficient development experience, hot replacement is enabled to automatically detect changes and restart the application. 
 
 ## Architecture
 
