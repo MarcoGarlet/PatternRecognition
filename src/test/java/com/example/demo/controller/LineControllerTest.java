@@ -40,15 +40,15 @@ public class LineControllerTest {
     @Test
     public void findLineSegments_shouldReturnLineSegmentsWithAtLeastNPoints() throws Exception {
         // Arrange: Define points that lie on the same lines
-        Point p1 = new Point(0.0f, 0.0f);
+        Point p1 = new Point(0.0d, 0.0d);
         p1.setId(1L);
-        Point p2 = new Point(1.0f, 1.0f); // Lies on y = x with p1 and p3
+        Point p2 = new Point(1.0d, 1.0d); // Lies on y = x with p1 and p3
         p2.setId(2L);
-        Point p3 = new Point(2.0f, 2.0f);
+        Point p3 = new Point(2.0d, 2.0d);
         p3.setId(3L);
-        Point p4 = new Point(3.0f, 3.0f); // Lies on y = x with p1, p2, p3
+        Point p4 = new Point(3.0d, 3.0d); // Lies on y = x with p1, p2, p3
         p4.setId(4L);
-        Point p5 = new Point(0.0f, 1.0f); // Independent point, doesn't fall on y = x
+        Point p5 = new Point(0.0d, 1.0d); // Independent point, doesn't fall on y = x
 
         List<Point> points = Arrays.asList(p1, p2, p3, p4, p5);
 
