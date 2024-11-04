@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
  * This controller provides an API to create and manage points with x and y coordinates.
  */
 @RestController
-@RequestMapping("/api/points")  
+@RequestMapping("/points")  
 public class PointController {
 
     private final PointRepository pointRepository;
