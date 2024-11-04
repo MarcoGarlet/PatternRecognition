@@ -21,6 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.Assertions;
+
+import com.example.demo.utils.MathUtils;
+
 /**
  * Test class for SpaceController.
  * Validates the endpoint for retrieving all points in space.
@@ -43,9 +49,9 @@ public class SpaceControllerTest {
     @Test
     public void findAllPoints_shouldReturnListOfPoints() throws Exception {
         // Arrange: Create a list of mock points to be returned by the repository
-        Point point1 = new Point(10.0f, 20.0f);
+        Point point1 = new Point(10.0d, 20.0d);
         point1.setId(1L);
-        Point point2 = new Point(30.0f, 40.0f);
+        Point point2 = new Point(30.0d, 40.0d);
         point2.setId(2L);
         List<Point> points = Arrays.asList(point1, point2);
 
@@ -53,17 +59,28 @@ public class SpaceControllerTest {
         when(pointRepository.findAll()).thenReturn(points);
 
         // Act & Assert: Perform GET request and check the response
-        mockMvc.perform(get("/space")
+        String responseContent = mockMvc.perform(get("/space")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(2)) // Expecting two points
-                .andExpect(jsonPath("$[0].id").value(1))
-                .andExpect(jsonPath("$[0].x").value(10.0))
-                .andExpect(jsonPath("$[0].y").value(20.0))
-                .andExpect(jsonPath("$[1].id").value(2))
-                .andExpect(jsonPath("$[1].x").value(30.0))
-                .andExpect(jsonPath("$[1].y").value(40.0));
+                .andReturn().getResponse().getContentAsString();
+
+        // Parse the JSON response
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(responseContent);
+
+        // Assert: Check that there are exactly 2 points
+        Assertions.assertEquals(2, rootNode.size());
+
+        // Check each point within range
+        JsonNode pointNode1 = rootNode.get(0);
+        Assertions.assertEquals(1L, pointNode1.get("id").asLong());
+        Assertions.assertTrue(MathUtils.areEqual(10.0d, pointNode1.get("x").asDouble()));
+        Assertions.assertTrue(MathUtils.areEqual(20.0d, pointNode1.get("y").asDouble()));
+
+        JsonNode pointNode2 = rootNode.get(1);
+        Assertions.assertEquals(2L, pointNode2.get("id").asLong());
+        Assertions.assertTrue(MathUtils.areEqual(30.0d, pointNode2.get("x").asDouble()));
+        Assertions.assertTrue(MathUtils.areEqual(40.0d, pointNode2.get("y").asDouble()));
     }
 
     /**

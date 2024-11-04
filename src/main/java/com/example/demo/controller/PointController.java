@@ -23,7 +23,7 @@ public class PointController {
     /**
      * Creates a new Point with the given x and y coordinates.
      * 
-     * @param pointRequest a JSON object containing the fields x and y (both required as float values).
+     * @param pointRequest a JSON object containing the fields x and y (both required as double values).
      * @return the saved Point object, including its generated ID.
      *
      * @apiNote Example JSON request:
@@ -50,13 +50,13 @@ public class PointController {
     }
 
     public static class PointRequest {
-        private float x;
-        private float y;
+        private double x;
+        private double y;
 
-        public float getX() { return x; }
-        public void setX(float x) { this.x = x; }
+        public double getX() { return x; }
+        public void setX(double x) { this.x = x; }
 
-        public float getY() { return y; }
-        public void setY(float y) { this.y = y; }
+        public double getY() { return y; }
+        public void setY(double y) { this.y = y; }
     }
 }
